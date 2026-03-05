@@ -176,9 +176,9 @@ proxy-groups:
 
   - <<: *Function-group-config
     name: 🏠 私有网络
-  - <<: *Function-group-config
-    name: 🌍 全球直连
 
+  - <<: *Function-group-config
+    name: 🎵 TikTok
   - <<: *Function-group-config
     name: 🤖 AI 服务
   - <<: *Function-group-config
@@ -194,8 +194,6 @@ proxy-groups:
   - <<: *Function-group-config
     name: 🍏 苹果服务
   - <<: *Function-group-config
-    name: 🎵 TikTok
-  - <<: *Function-group-config
     name: 📱 社交媒体
   - <<: *Function-group-config
     name: 🎬 流媒体
@@ -210,6 +208,9 @@ proxy-groups:
 
   - <<: *Function-group-config
     name: 🧪 TEST
+
+  - <<: *Function-group-config
+    name: 🌍 全球直连
 
   - <<: *Function-group-config
     name: 🌐 全球代理
@@ -584,16 +585,10 @@ rules:
 
   - RULE-SET,category-ads-all,🛑 广告拦截
 
-  - RULE-SET,check,🧪 TEST
-
   - RULE-SET,private,🏠 私有网络,no-resolve
 
-  - RULE-SET,geolocation-cn,🌍 全球直连
-  - RULE-SET,cn-domain,🌍 全球直连
-  - RULE-SET,cn,🌍 全球直连,no-resolve
-
-  - RULE-SET,category-ai-!cn,🤖 AI 服务
   - RULE-SET,tiktok,🎵 TikTok
+  - RULE-SET,category-ai-!cn,🤖 AI 服务
   - RULE-SET,google,🔍 谷歌服务,no-resolve
   - RULE-SET,youtube,📺 油管视频
   - RULE-SET,github,🐱 Github
@@ -633,6 +628,12 @@ rules:
   - RULE-SET,digitalocean,☁️ 云服务
   - RULE-SET,heroku,☁️ 云服务
   - RULE-SET,dropbox,☁️ 云服务
+
+  - RULE-SET,check,🧪 TEST
+
+  - RULE-SET,geolocation-cn,🌍 全球直连
+  - RULE-SET,cn-domain,🌍 全球直连
+  - RULE-SET,cn,🌍 全球直连,no-resolve
 
   - RULE-SET,geolocation-!cn,🌐 全球代理,no-resolve
   - MATCH,🎣 漏网之鱼
