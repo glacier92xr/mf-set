@@ -194,9 +194,9 @@ proxy-groups:
 
   - <<: *Function-group-config
     name: 🏠 私有网络
-  - <<: *Function-group-config
-    name: 🌍 全球直连
 
+  - <<: *Function-group-config
+    name: 🎵 TikTok
   - <<: *Function-group-config
     name: 🤖 AI 服务
   - <<: *Function-group-config
@@ -212,8 +212,6 @@ proxy-groups:
   - <<: *Function-group-config
     name: 🍏 苹果服务
   - <<: *Function-group-config
-    name: 🎵 TikTok
-  - <<: *Function-group-config
     name: 📱 社交媒体
   - <<: *Function-group-config
     name: 🎬 流媒体
@@ -228,6 +226,9 @@ proxy-groups:
 
   - <<: *Function-group-config
     name: 🧪 TEST
+
+  - <<: *Function-group-config
+    name: 🌍 全球直连
 
   - <<: *Function-group-config
     name: 🌐 全球代理
