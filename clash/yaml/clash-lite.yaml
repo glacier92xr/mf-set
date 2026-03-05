@@ -242,12 +242,12 @@ DomainMRS: &DomainMRS
   format: mrs
   behavior: domain
 
-IPCIDRMRS: &IPCIDRMRS
+IpcidrMRS: &IpcidrMRS
   <<: *BaseHTTP
   format: mrs
   behavior: ipcidr
 
-FakeIPFilter: &FakeIPFilter
+DomainText: &DomainText
   <<: *BaseHTTP
   format: text
   behavior: domain
@@ -255,7 +255,7 @@ FakeIPFilter: &FakeIPFilter
 # 正式规则
 rule-providers:
   fake_ip_filter:
-    <<: *FakeIPFilter
+    <<: *DomainText
     url: >-
       https://gh-proxy.com/https://raw.githubusercontent.com/DustinWin/ShellCrash/refs/heads/dev/public/fake_ip_filter.list
     path: ./rule_provider/fake_ip_filter.list
@@ -285,13 +285,13 @@ rule-providers:
     path: ./rule_provider/geolocation-!cn.mrs
 
   private:
-    <<: *IPCIDRMRS
+    <<: *IpcidrMRS
     url: >-
       https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/private.mrs
     path: ./rule_provider/private.mrs
 
   cn:
-    <<: *IPCIDRMRS
+    <<: *IpcidrMRS
     url: >-
       https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/cn.mrs
     path: ./rule_provider/cn.mrs
