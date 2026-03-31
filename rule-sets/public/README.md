@@ -29,7 +29,7 @@ dns:
   enable: true
 
   fake-ip-filter:
-    # fakeip-filter 为 rule-providers 中的名为 fakeip-filter 规则订阅，
+    # fake-ip-filter 为 rule-providers 中的名为 fake-ip-filter 规则订阅，
     # 且 behavior 必须为 domain/classical，当为 classical 时仅会生效域名类规则
     - rule-set:fake-ip-filter
 ```
