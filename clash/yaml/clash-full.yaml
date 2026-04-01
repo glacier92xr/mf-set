@@ -378,23 +378,11 @@ rule-providers:
       https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/apple.mrs
     path: ./rule_provider/apple.mrs
 
-  facebook:
+  category-social-media-!cn:
     <<: *DomainMRS
     url: >-
-      https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/facebook.mrs
-    path: ./rule_provider/facebook.mrs
-
-  instagram:
-    <<: *DomainMRS
-    url: >-
-      https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/instagram.mrs
-    path: ./rule_provider/instagram.mrs
-
-  twitter:
-    <<: *DomainMRS
-    url: >-
-      https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/twitter.mrs
-    path: ./rule_provider/twitter.mrs
+      https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-social-media-!cn.mrs
+    path: ./rule_provider/category-social-media-!cn.mrs
 
   telegram:
     <<: *DomainMRS
@@ -407,12 +395,6 @@ rule-providers:
     url: >-
       https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/tiktok.mrs
     path: ./rule_provider/tiktok.mrs
-
-  linkedin:
-    <<: *DomainMRS
-    url: >-
-      https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/linkedin.mrs
-    path: ./rule_provider/linkedin.mrs
 
   netflix:
     <<: *DomainMRS
@@ -622,10 +604,8 @@ rules:
   - RULE-SET,apple,🍏 苹果服务
   - RULE-SET,telegram,💬 电报消息
   - RULE-SET,telegram-ip,💬 电报消息,no-resolve
-  - RULE-SET,facebook,📱 社交媒体
-  - RULE-SET,instagram,📱 社交媒体
-  - RULE-SET,twitter,📱 社交媒体
-  - RULE-SET,linkedin,📱 社交媒体
+
+  - RULE-SET,category-social-media-!cn,📱 社交媒体
 
   - RULE-SET,netflix,🎬 流媒体
   - RULE-SET,hulu,🎬 流媒体
