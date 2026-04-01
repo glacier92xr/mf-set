@@ -162,13 +162,13 @@ proxy-groups:
   # 手动切换组
   - name: 🖐️ 手动切换
     <<: *Select
-    filter: ^((?!(直连|DIRECT|拒绝|REJECT)).)*$
+    filter: ^((?!(直连|DIRECT|拒绝|REJECT|链式|^(?i:nsc))).)*$
 
   # 自动选择组
   - name: ⚡ 自动选择
     <<: *UrlTest
     hidden: false
-    filter: ^((?!(直连|DIRECT|拒绝|REJECT)).)*$
+    filter: ^((?!(直连|DIRECT|拒绝|REJECT|链式|^(?i:nsc))).)*$
 
   # 功能策略组
   - <<: *Function-group-config
@@ -176,6 +176,9 @@ proxy-groups:
 
   - <<: *Function-group-config
     name: 🏠 私有网络
+
+  - <<: *Function-group-config
+    name: 🔗 public-tracker
 
   - <<: *Function-group-config
     name: 🎵 TikTok
@@ -207,7 +210,7 @@ proxy-groups:
     name: ☁️ 云服务
 
   - <<: *Function-group-config
-    name: 🧪 TEST
+    name: 🧪 Check
 
   - <<: *Function-group-config
     name: 🌍 全球直连
@@ -242,7 +245,10 @@ proxy-groups:
   # 地区节点组 - 美国
   - name: 🇺🇸 美国
     <<: *FallBack
+    # use: [nsc]
+    include-all: true
     filter: "(?=.*(广美|US|美国|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|🇺🇸|United States)).*$"
+    exclude-filter: "^(?!(?i:zy)).*$"
 
   # 地区节点组 - 其他
   - name: 🌏 其他
@@ -282,35 +288,47 @@ rule-providers-anchor:
     format: mrs
     behavior: ipcidr
 
-  DomainText: &DomainText
+  DomainYaml: &DomainYaml
     <<: *BaseHTTP
-    format: text
+    format: yaml
     behavior: domain
 
-  ClassicalText: &ClassicalText
+  ClassicalYaml: &ClassicalYaml
     <<: *BaseHTTP
-    format: text
+    format: yaml
     behavior: classical
 
 # 正式规则
 rule-providers:
-  fake_ip_filter:
-    <<: *DomainText
+  fake-ip-filter:
+    <<: *DomainYaml
     url: >-
-      https://gh-proxy.com/https://raw.githubusercontent.com/DustinWin/ShellCrash/refs/heads/dev/public/fake_ip_filter.list
-    path: ./rule_provider/fake_ip_filter.list
+      https://gh-proxy.com/https://raw.githubusercontent.com/glacier92xr/mf-set/refs/heads/main/rule-sets/public/fake-ip-filter.yaml
+    path: "./rule_provider/fake-ip-filter.yaml"
+
+  category-check:
+    <<: *ClassicalYaml
+    url: >-
+      https://gh-proxy.com/https://raw.githubusercontent.com/glacier92xr/mf-set/refs/heads/main/rule-sets/public/category-check.yaml
+    path: "./rule_provider/category-check.yaml"
+
+  glacier:
+    <<: *ClassicalYaml
+    url: >-
+      https://gh-proxy.com/https://raw.githubusercontent.com/glacier92xr/mf-set/refs/heads/main/rule-sets/private/glacier.yaml
+    path: "./rule_provider/glacier.yaml"
+
+  category-public-tracker:
+    <<: *DomainMRS
+    url: >-
+      https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-public-tracker.mrs
+    path: "./rule_provider/category-public-tracker.mrs"
 
   category-ads-all:
     <<: *DomainMRS
     url: >-
       https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ads-all.mrs
     path: ./rule_provider/category-ads-all.mrs
-
-  check:
-    <<: *ClassicalText
-    url: >-
-      https://gh-proxy.com/https://github.com/liandu2024/clash/raw/refs/heads/main/list/Check.list
-    path: ./rule_provider/check.list
 
   category-ai-!cn:
     <<: *DomainMRS
@@ -330,11 +348,11 @@ rule-providers:
       https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/geolocation-cn.mrs
     path: ./rule_provider/geolocation-cn.mrs
 
-  cn-domain:
+  cn:
     <<: *DomainMRS
     url: >-
       https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/cn.mrs
-    path: ./rule_provider/cn-domain.mrs
+    path: ./rule_provider/cn.mrs
 
   github:
     <<: *DomainMRS
@@ -347,6 +365,12 @@ rule-providers:
     url: >-
       https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/gitlab.mrs
     path: ./rule_provider/gitlab.mrs
+
+  google:
+    <<: *DomainMRS
+    url: >-
+      https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/google.mrs
+    path: ./rule_provider/google.mrs
 
   microsoft:
     <<: *DomainMRS
@@ -377,6 +401,12 @@ rule-providers:
     url: >-
       https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/twitter.mrs
     path: ./rule_provider/twitter.mrs
+
+  telegram:
+    <<: *DomainMRS
+    url: >-
+      https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/telegram.mrs
+    path: ./rule_provider/telegram.mrs
 
   tiktok:
     <<: *DomainMRS
@@ -552,50 +582,52 @@ rule-providers:
       https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/geolocation-!cn.mrs
     path: ./rule_provider/geolocation-!cn.mrs
 
-  private:
+  private-ip:
     <<: *IpcidrMRS
     url: >-
       https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/private.mrs
-    path: ./rule_provider/private.mrs
+    path: ./rule_provider/private-ip.mrs
 
-  google:
+  google-ip:
     <<: *IpcidrMRS
     url: >-
       https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/google.mrs
-    path: ./rule_provider/google.mrs
+    path: ./rule_provider/google-ip.mrs
 
-  telegram:
+  telegram-ip:
     <<: *IpcidrMRS
     url: >-
       https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/telegram.mrs
-    path: ./rule_provider/telegram.mrs
+    path: ./rule_provider/telegram-ip.mrs
 
-  cn:
+  cn-ip:
     <<: *IpcidrMRS
     url: >-
       https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/cn.mrs
-    path: ./rule_provider/cn.mrs
+    path: ./rule_provider/cn-ip.mrs
 
 # =========================
 # 规则
 # =========================
 rules:
-  - DOMAIN-SUFFIX,glacier.top,DIRECT
-  - DOMAIN-SUFFIX,glacier.de5.net,DIRECT
+  - RULE-SET,glacier,DIRECT
 
   - RULE-SET,category-ads-all,🛑 广告拦截
 
-  - RULE-SET,private,🏠 私有网络,no-resolve
+  - RULE-SET,private-ip,🏠 私有网络,no-resolve
+  - RULE-SET,category-public-tracker,🔗 public-tracker
 
   - RULE-SET,tiktok,🎵 TikTok
   - RULE-SET,category-ai-!cn,🤖 AI 服务
-  - RULE-SET,google,🔍 谷歌服务,no-resolve
   - RULE-SET,youtube,📺 油管视频
+  - RULE-SET,google,🔍 谷歌服务
+  - RULE-SET,google-ip,🔍 谷歌服务,no-resolve
   - RULE-SET,github,🐱 Github
   - RULE-SET,gitlab,🐱 Github
   - RULE-SET,microsoft,🪟 微软服务
   - RULE-SET,apple,🍏 苹果服务
-  - RULE-SET,telegram,💬 电报消息,no-resolve
+  - RULE-SET,telegram,💬 电报消息
+  - RULE-SET,telegram-ip,💬 电报消息,no-resolve
   - RULE-SET,facebook,📱 社交媒体
   - RULE-SET,instagram,📱 社交媒体
   - RULE-SET,twitter,📱 社交媒体
@@ -629,11 +661,11 @@ rules:
   - RULE-SET,heroku,☁️ 云服务
   - RULE-SET,dropbox,☁️ 云服务
 
-  - RULE-SET,check,🧪 TEST
+  - RULE-SET,category-check,🧪 Check
 
   - RULE-SET,geolocation-cn,🌍 全球直连
-  - RULE-SET,cn-domain,🌍 全球直连
-  - RULE-SET,cn,🌍 全球直连,no-resolve
+  - RULE-SET,cn,🌍 全球直连
+  - RULE-SET,cn-ip,🌍 全球直连,no-resolve
 
   - RULE-SET,geolocation-!cn,🌐 全球代理,no-resolve
   - MATCH,🎣 漏网之鱼
@@ -642,7 +674,7 @@ rules:
 # TUN 强制接管模式
 # =========================
 tun:
-  enable: false
+  enable: true
   stack: mixed
   auto-route: true
   auto-detect-interface: true
@@ -671,16 +703,13 @@ dns:
   fake-ip-ttl: 300
 
   fake-ip-filter:
-    # fakeip-filter 为 rule-providers 中的名为 fakeip-filter 规则订阅，
+    # fake-ip-filter 为 rule-providers 中的名为 fake-ip-filter 规则订阅，
     # 且 behavior 必须为 domain/classical，当为 classical 时仅会生效域名类规则
-    - rule-set:fake_ip_filter
+    - rule-set:fake-ip-filter
+    - rule-set:glacier
     # # fakeip-filter 为 geosite 中名为 fakeip-filter 的分类（需要自行保证该分类存在）
     # - geosite:fakeip-filter
-    # 自定义域名
-    - "+.glacier.top"
-    - "+.glacier.de5.net"
-    # 机场
-    - "*.ali66mysql.com"
+    - geosite:cn
 
   # 保证直连域名只走 direct-nameserver / nameserver，不被 fallback 干扰
   direct-nameserver-follow-policy: false
@@ -688,10 +717,10 @@ dns:
   # 用于解析 nameserver，fallback 以及其他 DNS 服务器配置的，DNS 服务域名
   # 只能使用纯 IP 地址，可使用加密 DNS
   default-nameserver:
-    - tls://1.12.12.12
-    - tls://223.5.5.5
-    - tls://1.1.1.1
-    - tls://8.8.8.8
+    - tls://1.12.12.12:853
+    - tls://223.5.5.5:853
+    - tls://1.1.1.1:853
+    - tls://8.8.8.8:853
 
   # 全局默认加密 DNS
   nameserver:
@@ -715,13 +744,73 @@ dns:
     geoip-code: CN
     # 如果不匹配 ipcidr 则使用 nameservers 中的结果
     ipcidr:
+      - ::/128
+      - ::1/128
+      - 2001::/32
+      - 0.0.0.0/8
+      - 10.0.0.0/8
+      - 100.64.0.0/10
+      - 127.0.0.0/8
+      - 169.254.0.0/16
+      - 172.16.0.0/12
+      - 192.0.0.0/24
+      - 192.0.2.0/24
+      - 192.88.99.0/24
+      - 192.168.0.0/16
+      - 198.18.0.0/15
+      - 198.51.100.0/24
+      - 203.0.113.0/24
+      - 224.0.0.0/4
       - 240.0.0.0/4
-      - 0.0.0.0/32
+      - 255.255.255.255/32
     domain:
       - "+.github.com"
+      - "+.google.com"
+      - "+.facebook.com"
+      - "+.youtube.com"
+      - "+.githubusercontent.com"
+      - "+.googlevideo.com"
+      - "+.msftconnecttest.com"
+      - "+.msftncsi.com"
     # 配置强制 fallback，优先于 IP 判断，具体分类自行查看 geosite 库
     geosite:
       - gfw
+
+ntp:
+  enable: true
+  write-to-system: true
+  server: time.apple.com
+  port: 123
+  interval: 30
+
+sniffer:
+  enable: true
+  override-destination: true
+  sniff:
+    QUIC:
+      ports:
+        - 443
+    TLS:
+      ports:
+        - 443
+        - 8443
+    HTTP:
+      ports:
+        - 80
+        - 8080-8880
+      override-destination: true
+  force-domain:
+    - "+.netflix.com"
+    - "+.nflxvideo.net"
+    - "+.amazonaws.com"
+    - "+.media.dssott.com"
+  skip-domain:
+    - Mijia Cloud
+    - dlg.io.mi.com
+    - "+.oray.com"
+    - "+.sunlogin.net"
+    - "+.push.apple.com"
+  parse-pure-ip: true
 
 # =========================
 # 流量入站
@@ -760,5 +849,5 @@ listeners:
     type: mixed
     listen: 0.0.0.0
     port: 10815
-    proxy: DIRECT
+    proxy: 🇺🇸 美国
     udp: true
