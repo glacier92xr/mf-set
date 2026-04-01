@@ -348,12 +348,6 @@ rule-providers:
       https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/geolocation-cn.mrs
     path: ./rule_provider/geolocation-cn.mrs
 
-  cn:
-    <<: *DomainMRS
-    url: >-
-      https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/cn.mrs
-    path: ./rule_provider/cn.mrs
-
   github:
     <<: *DomainMRS
     url: >-
@@ -664,7 +658,6 @@ rules:
   - RULE-SET,category-check,🧪 Check
 
   - RULE-SET,geolocation-cn,🌍 全球直连
-  - RULE-SET,cn,🌍 全球直连
   - RULE-SET,cn-ip,🌍 全球直连,no-resolve
 
   - RULE-SET,geolocation-!cn,🌐 全球代理,no-resolve
