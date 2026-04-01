@@ -330,11 +330,31 @@ rule-providers:
       https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ads-all.mrs
     path: ./rule_provider/category-ads-all.mrs
 
+  google-gemini:
+    <<: *DomainMRS
+    url: >-
+      https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/google-gemini.mrs
+    path: ./rule_provider/google-gemini.mrs
+
+  openai:
+    <<: *DomainMRS
+    url: >-
+      https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai.mrs
+    path: ./rule_provider/openai.mrs
+
+  anthropic:
+    <<: *DomainMRS
+    url: >-
+      https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/anthropic.mrs
+    path: ./rule_provider/anthropic.mrs
+
   category-ai-!cn:
     <<: *DomainMRS
     url: >-
       https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ai-!cn.mrs
     path: ./rule_provider/category-ai-!cn.mrs
+
+
 
   youtube:
     <<: *DomainMRS
@@ -594,7 +614,12 @@ rules:
   - RULE-SET,category-public-tracker,🔗 public-tracker
 
   - RULE-SET,tiktok,🎵 TikTok
+
+  - RULE-SET,google-gemini,🤖 AI 服务
+  - RULE-SET,openai,🤖 AI 服务
+  - RULE-SET,anthropic,🤖 AI 服务
   - RULE-SET,category-ai-!cn,🤖 AI 服务
+
   - RULE-SET,youtube,📺 油管视频
   - RULE-SET,google,🔍 谷歌服务
   - RULE-SET,google-ip,🔍 谷歌服务,no-resolve
@@ -619,11 +644,13 @@ rules:
   - RULE-SET,ea,🎮 游戏平台
   - RULE-SET,ubisoft,🎮 游戏平台
   - RULE-SET,blizzard,🎮 游戏平台
+
   - RULE-SET,coursera,📖 教育资源
   - RULE-SET,edx,📖 教育资源
   - RULE-SET,udemy,📖 教育资源
   - RULE-SET,khanacademy,📖 教育资源
   - RULE-SET,category-scholar-!cn,📖 教育资源
+
   - RULE-SET,paypal,💹 金融服务
   - RULE-SET,visa,💹 金融服务
   - RULE-SET,mastercard,💹 金融服务
