@@ -1,13 +1,6 @@
 payload:
-  - DOMAIN-SUFFIX,glacier.top
-  - DOMAIN-SUFFIX,glacier.de5.net
-  - DOMAIN-SUFFIX,glacier.indevs.in
-  - DOMAIN-SUFFIX,xiaoyumi.eu.cc
-  # - DOMAIN-SUFFIX,google.com
-  # - DOMAIN-KEYWORD,google
-  # - DOMAIN,ad.com
-  # - SRC-IP-CIDR,192.168.1.201/32
-  # - IP-CIDR,127.0.0.0/8
-  # - GEOIP,CN
-  # - DST-PORT,80
-  # - SRC-PORT,7777
+  - +.glacier.top
+  - +.glacier.de5.net
+  - +.glacier.indevs.in
+  - +.xiaoyumi.eu.cc
+
