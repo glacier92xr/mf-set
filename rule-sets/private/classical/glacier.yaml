@@ -5,6 +5,7 @@ payload:
   - DOMAIN-SUFFIX,discover.ccwu.cc
   - DOMAIN-SUFFIX,cfmew.ccwu.cc
   - DOMAIN-SUFFIX,xiaoyumi.eu.cc
+  - DOMAIN,gh-proxy.com
   # - DOMAIN-SUFFIX,google.com
   # - DOMAIN-KEYWORD,google
   # - DOMAIN,ad.com
